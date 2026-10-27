@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveEase - Layanan Rental Mobil Terpercaya</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            navy: '#0F172A',
+                            slate: '#1E293B',
+                            gold: '#F59E0B',
+                            orange: '#F97316',
+                            light: '#F8FAFC'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-overlay {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.85) 100%);
+        }
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800 antialiased selection:bg-amber-500 selection:text-white">
+
+    <!-- 1. NAVBAR / HEADER -->
+    <header class="fixed w-full top-0 z-40 bg-brand-navy/90 backdrop-blur-md border-b border-slate-800 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 bg-amber-500 rounded-xl flex items-center justify-center text-brand-navy text-xl font-black shadow-lg shadow-amber-500/30 group-hover:scale-105 transition-transform">
+                        <i class="fa-solid font-bold fa-car-side"></i>
+                    </div>
+                    <span class="text-2xl font-extrabold text-white tracking-tight">Drive<span class="text-amber-500">Ease</span></span>
+                </a>
+
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden md:flex items-center space-x-8 font-medium text-sm text-slate-300">
+                    <a href="#beranda" class="hover:text-amber-500 transition-colors">Beranda</a>
+                    <a href="#armada" class="hover:text-amber-500 transition-colors">Armada Kami</a>
+                    <a href="#keunggulan" class="hover:text-amber-500 transition-colors">Keunggulan</a>
+                    <a href="#paket" class="hover:text-amber-500 transition-colors">Harga & Paket</a>
+                    <a href="#testimoni" class="hover:text-amber-500 transition-colors">Testimoni</a>
+                    <a href="#kontak" class="hover:text-amber-500 transition-colors">Kontak</a>
+                </nav>
+
+                <!-- CTA Header Button -->
+                <div class="hidden md:flex items-center">
+                    <button onclick="openBookingModal()" class="bg-amber-500 hover:bg-amber-600 text-brand-navy font-bold px-5 py-2.5 rounded-xl shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40 transition-all text-sm flex items-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        <span>Sewa Sekarang</span>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-white p-2 rounded-lg focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div class="hidden md:hidden bg-brand-slate border-b border-slate-700 px-4 pt-2 pb-6 space-y-3" id="mobile-menu">
+            <a href="#beranda" class="block py-2 text-slate-300 hover:text-amber-500 font-medium">Beranda</a>
+            <a href="#armada" class="block py-2 text-slate-300 hover:text-amber-500 font-medium">Armada Kami</a>
+            <a href="#keunggulan" class="block py-2 text-slate-300 hover:text-amber-500 font-medium">Keunggulan</a>
+            <a href="#paket" class="block py-2 text-slate-300 hover:text-amber-500 font-medium">Harga & Paket</a>
+            <a href="#testimoni" class="block py-2 text-slate-300 hover:text-amber-500 font-medium">Testimoni</a>
+            <a href="#kontak" class="block py-2 text-slate-300 hover:text-amber-500 font-medium">Kontak</a>
+            <button onclick="openBookingModal()" class="w-full mt-2 bg-amber-500 hover:bg-amber-600 text-brand-navy font-bold py-3 rounded-xl flex items-center justify-center gap-2">
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+                <span>Sewa Sekarang</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- 2. HERO SECTION WITH SEARCH FORM -->
+    <section id="beranda" class="relative pt-28 pb-20 md:pt-36 md:pb-32 bg-brand-navy text-white overflow-hidden">
+        <!-- Background Decorative Elements -->
+        <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#F59E0B_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Text -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-800/80 border border-slate-700 text-amber-400 text-xs sm:text-sm font-semibold">
+                        <i class="fa-solid fa-star text-xs"></i> Layanan Rental Mobil Terbaik #1 di Kota
+                    </div>
+                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight">
+                        Sewa Mobil Mudah, Cepat & <span class="text-amber-500">Terpercaya</span>
+                    </h1>
+                    <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-light">
+                        Nikmati perjalanan aman dan nyaman dengan armada kendaraan terbaru, kondisi prima, harga transparan, serta opsi lepas kunci atau dengan sopir berpengalaman.
+                    </p>
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#armada" class="px-7 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-brand-navy font-bold shadow-lg shadow-amber-500/20 transition-all">Lihat Armada</a>
+                        <a href="#cara-pesan" class="px-7 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-medium border border-slate-700 transition-all">Cara Pemesanan</a>
+                    </div>
+                </div>
+
+                <!-- Hero Image -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl border border-slate-700/50">
+                        <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=1000&auto=format&fit=crop" 
+                             alt="Rental Mobil Mewah" 
+                             class="w-full h-80 sm:h-96 object-cover transform hover:scale-105 transition-transform duration-500"
+                             onerror="this.src='https://placehold.co/800x600/1E293B/F59E0B?text=DriveEase+Fleet'">
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-brand-navy via-brand-navy/60 to-transparent p-6">
+                            <span class="bg-amber-500 text-brand-navy text-xs font-bold px-2.5 py-1 rounded">PROMO MINGGU INI</span>
+                            <p class="text-white font-bold text-lg mt-1">Diskon 15% untuk Sewa Mingguan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Booking / Search Form Box -->
+            <div class="mt-12 bg-white rounded-2xl p-6 sm:p-8 shadow-2xl text-slate-800 border border-slate-100">
+                <h3 class="text-lg font-bold text-brand-navy mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-magnifying-glass text-amber-500"></i> Cari & Reservasi Mobil Instan
+                </h3>
+                <form id="quick-search-form" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Pilih Jenis Mobil</label>
+                        <select id="search-car" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            <option value="Semua Mobil">Semua Kategori</option>
+                            <option value="Avanza / Xenia">MPV (Avanza, Innova, Ertiga)</option>
+                            <option value="Brio / Yaris">City Car (Brio, Yaris, March)</option>
+                            <option value="Pajero / Fortuner">SUV (Pajero, Fortuner, CR-V)</option>
+                            <option value="Alphard / Vellfire">Luxury (Alphard, Camry, Mercedez)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Layanan</label>
+                        <select id="search-driver" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            <option value="Dengan Sopir">Dengan Sopir (+ Driver)</option>
+                            <option value="Lepas Kunci">Tanpa Sopir (Lepas Kunci)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Tanggal Mulai</label>
+                        <input type="date" id="search-date" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    </div>
+                    <div class="flex items-end">
+                        <button type="button" onclick="handleQuickSearch()" class="w-full bg-amber-500 hover:bg-amber-600 text-brand-navy font-bold py-3 rounded-xl transition-all shadow-md shadow-amber-500/20 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> Cek Ketersediaan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. SECTION KEUNGGULAN (WHY CHOOSE US) -->
+    <section id="keunggulan" class="py-20 bg-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-amber-600 font-bold text-sm tracking-wider uppercase">Mengapa Pilih Kami</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-navy mt-2">Komitmen Keamanan & Kenyamanan Anda</h2>
+                <p class="text-slate-600 mt-3 text-base">Kami senantiasa memberikan standar kualitas layanan terbaik demi kepuasan dan kenyamanan perjalanan Anda.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200/80 card-hover">
+                    <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-navy mb-2">Layanan 24/7</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Tim customer support kami selalu siap membantu pemesanan & kendala Anda kapan saja, 24 jam sehari.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200/80 card-hover">
+                    <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-pump-soap"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-navy mb-2">Mobil Terawat & Bersih</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Unit rutin diservis berkala secara resmi dan dibersihkan/disterilkan sebelum diserahkan ke pelanggan.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200/80 card-hover">
+                    <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-navy mb-2">Sopir Berpengalaman</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Driver ramah, profesional, paham rute jalan terbaik, serta mengutamakan keselamatan penumpang.</p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200/80 card-hover">
+                    <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-navy mb-2">Harga Transparan</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">Tanpa biaya tersembunyi. Syarat sewa mudah, transparan, serta opsi bayar di tempat (COD).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SECTION FLEET / ARMADA MOBIL -->
+    <section id="armada" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-amber-600 font-bold text-sm tracking-wider uppercase">Pilihan Kendaraan</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-navy mt-2">Pilih Armada Sesuai Kebutuhan</h2>
+                <p class="text-slate-600 mt-3 text-base">Tersedia berbagai varian mobil terbaru dari City Car hingga Luxury Car dalam kondisi prima.</p>
+            </div>
+
+            <!-- Category Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-2 sm:gap-4 mb-12">
+                <button onclick="filterFleet('all')" class="fleet-filter-btn active bg-brand-navy text-white px-5 py-2.5 rounded-xl font-medium text-sm transition-all">Semua</button>
+                <button onclick="filterFleet('citycar')" class="fleet-filter-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-5 py-2.5 rounded-xl font-medium text-sm transition-all">City Car</button>
+                <button onclick="filterFleet('mpv')" class="fleet-filter-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-5 py-2.5 rounded-xl font-medium text-sm transition-all">MPV Keluarga</button>
+                <button onclick="filterFleet('suv')" class="fleet-filter-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-5 py-2.5 rounded-xl font-medium text-sm transition-all">SUV Tough</button>
+                <button onclick="filterFleet('luxury')" class="fleet-filter-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-5 py-2.5 rounded-xl font-medium text-sm transition-all">Luxury VIP</button>
+            </div>
+
+            <!-- Fleet Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="fleet-grid">
+                
+                <!-- Car Card 1 -->
+                <div class="fleet-card citycar bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-52 bg-slate-100 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1590362891991-f776e747a588?q=80&w=800&auto=format&fit=crop" 
+                                 alt="Honda Brio" class="w-full h-full object-cover"
+                                 onerror="this.src='https://placehold.co/600x400/E2E8F0/1E293B?text=Honda+Brio'">
+                            <span class="absolute top-4 right-4 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full">Tersedia</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-brand-navy mb-1">Honda Brio RS</h3>
+                            <p class="text-xs text-slate-500 mb-4">Hemat BBM & Lincah di Jalanan Kota</p>
+                            
+                            <!-- Specs -->
+                            <div class="grid grid-cols-3 gap-2 py-3 border-y border-slate-100 text-slate-600 text-xs font-medium mb-4">
+                                <div class="flex items-center gap-1.5"><i class="fa-solid fa-user-group text-amber-500"></i> 5 Kursi</div>
+                                <div class="flex items-center gap-1.5"><i class="fa-solid fa-gear text-amber-500"></i> Otomatis</div>
+                                <div class="flex items-center gap-1.5"><i class="fa-solid fa-gas-pump text-amber-500"></i> Bensin</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex items-center justify-between border-t border-slate-50 mt-auto">
+                        <div>
+                            <span class="text-xs text-slate-400 block">Mulai dari</span>
+                            <span class="text-xl font-black text-amber-600">Rp 350.000</span><span class="text-xs text-slate-500">/hari</span>
+                        </div>
+                        <button onclick="bookCar('Honda Brio RS', '350.000')" class="bg-brand-navy hover:bg-slate-800 text-white font-medium px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 transition-all">
+                            <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i> Pesan WA
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Car Card 2 -->
+                <div class="fleet-card mpv bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-52 bg-slate-100 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=800&auto=format&fit=crop" 
+                                 alt="Toyota Grand Innova Zenix" class="w-full h-full object-cover"
+                                 onerror="this.src='https://placehold.co/600x400/E2E8F0/1E293B?text=Toyota+Innova'">
+                            <span class="absolute top-4 right-4 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full">Tersedia</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-brand-navy mb-1">Toyota Innova Zenix</h3>
+                            <p class="text-xs text-slate-500 mb-4">Keluarga Nyaman & Kabin Luas</p>
+                            
+                            <div class="grid grid-cols-3 gap-2 py-3 border-y border-slate-100 text-slate-600 text-xs font-medium mb-4">
+                                <div class="flex items-center gap-1.5"><i class="fa-solid fa-user-group text-amber-500"></i> 7 Kursi</div>
+                                <div class="flex items-center gap-1.5"><i class="fa-solid fa-gear text-amber-500"></i> Otomatis</div>
+                                <div class="flex items-center gap-1.5"><i class="fa-solid fa-bolt text-amber-500"></i> Hybrid</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex items-center justify-between border-t border-slate-50 mt-auto">
+                        <div>
+                            <span class="text-xs text-slate-400 block">Mulai dari</span>
+                            <span class="text-xl font-black text-amber-600">Rp 650.000</span><span class="text-xs text-slate-500">/hari</span>
+                        </div>
+                        <button onclick="bookCar('Toyota Innova Zenix', '650.000')" class="bg-brand-navy hover:bg-slate-800 text-white font-medium px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 transition-all">
+                            <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i> Pesan WA
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Car Card 3 -->
+                <div class="fleet-card suv bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-52 bg-slate-100 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=800&auto=format&fit=crop" 
+                                 alt="Mitsubishi Pajero Sport" class="w-full h-full object-cover"
+                                 onerror="this.src='https://placehold.co/600x400/E2E8F0/1E293B?text=Pajero+Sport'">
+                            <span class="absolute top-4 right-4 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full">Tersedia</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-brand-navy mb-1">Pajero Sport Dakar</h3>
+                            <p class="text-xs text-slate-500 mb-4">Gagah, Tangguh & Elegan</p>
+                            
+                            <div class="grid grid-cols-3 gap-2 py-3 border-y border-slate-100 text-slate-600 text-xs font-medium mb-4">
+                                <div class="flex items-center gap-1.5"><i class="fa-solid fa-user-group text-amber-500"></i> 7 Kursi</div>
+                                <div class="flex items-center gap-1.5"><i class="fa-solid fa-gear text-amber-500"></i> Otomatis</div>
+                                <div class="flex items-center gap-1.5"><i class="fa-solid fa-gas-pump text-amber-500"></i> Diesel</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex items-center justify-between border-t border-slate-50 mt-auto">
+                        <div>
+                            <span class="text-xs text-slate-400 block">Mulai dari</span>
+                            <span class="text-xl font-black text-amber-600">Rp 900.000</span><span class="text-xs text-slate-500">/hari</span>
+                        </div>
+                        <button onclick="bookCar('Pajero Sport Dakar', '900.000')" class="bg-brand-navy hover:bg-slate-800 text-white font-medium px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 transition-all">
+                            <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i> Pesan WA
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Car Card 4 -->
+                <div class="fleet-card luxury bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-52 bg-slate-100 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=800&auto=format&fit=crop" 
+                                 alt="Toyota Alphard" class="w-full h-full object-cover"
+                                 onerror="this.src='https://placehold.co/600x400/E2E8F0/1E293B?text=Toyota+Alphard'">
+                            <span class="absolute top-4 right-4 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full">Tersedia</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-brand-navy mb-1">Toyota Alphard Transformer</h3>
+                            <p class="text-xs text-slate-500 mb-4">Kemewahan Maksimal Kelas VIP</p>
+                            
+                            <div class="grid grid-cols-3 gap-2 py-3 border-y border-slate-100 text-slate-600 text-xs font-medium mb-4">
+                                <div class="flex items-center gap-1.5"><i class="fa-solid fa-user-group text-amber-500"></i> 6 Kursi</div>
+                                <div class="flex items-center gap-1.5"><i class="fa-solid fa-gear text-amber-500"></i> Otomatis</div>
+                                <div class="flex items-center gap-1.5"><i class="fa-solid fa-gas-pump text-amber-500"></i> Bensin</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex items-center justify-between border-t border-slate-50 mt-auto">
+                        <div>
+                            <span class="text-xs text-slate-400 block">Mulai dari</span>
+                            <span class="text-xl font-black text-amber-600">Rp 2.200.000</span><span class="text-xs text-slate-500">/hari</span>
+                        </div>
+                        <button onclick="bookCar('Toyota Alphard Transformer', '2.200.000')" class="bg-brand-navy hover:bg-slate-800 text-white font-medium px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 transition-all">
+                            <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i> Pesan WA
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Car Card 5 -->
+                <div class="fleet-card mpv bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-52 bg-slate-100 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=800&auto=format&fit=crop" 
+                                 alt="Toyota Avanza Veloz" class="w-full h-full object-cover"
+                                 onerror="this.src='https://placehold.co/600x400/E2E8F0/1E293B?text=Toyota+Avanza'">
+                            <span class="absolute top-4 right-4 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full">Tersedia</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-brand-navy mb-1">All New Veloz</h3>
+                            <p class="text-xs text-slate-500 mb-4">Pilihan Ekonomis Perjalanan Keluarga</p>
+                            
+                            <div class="grid grid-cols-3 gap-2 py-3 border-y border-slate-100 text-slate-600 text-xs font-medium mb-4">
+                                <div class="flex items-center gap-1.5"><i class="fa-solid fa-user-group text-amber-500"></i> 7 Kursi</div>
+                                <div class="flex items-center gap-1.5"><i class="fa-solid fa-gear text-amber-500"></i> Otomatis</div>
+                                <div class="flex items-center gap-1.5"><i class="fa-solid fa-gas-pump text-amber-500"></i> Bensin</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex items-center justify-between border-t border-slate-50 mt-auto">
+                        <div>
+                            <span class="text-xs text-slate-400 block">Mulai dari</span>
+                            <span class="text-xl font-black text-amber-600">Rp 450.000</span><span class="text-xs text-slate-500">/hari</span>
+                        </div>
+                        <button onclick="bookCar('All New Veloz', '450.000')" class="bg-brand-navy hover:bg-slate-800 text-white font-medium px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 transition-all">
+                            <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i> Pesan WA
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Car Card 6 -->
+                <div class="fleet-card suv bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm card-hover flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-52 bg-slate-100 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=800&auto=format&fit=crop" 
+                                 alt="Toyota Fortuner VRZ" class="w-full h-full object-cover"
+                                 onerror="this.src='https://placehold.co/600x400/E2E8F0/1E293B?text=Fortuner+VRZ'">
+                            <span class="absolute top-4 right-4 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full">Tersedia</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-brand-navy mb-1">Fortuner GR Sport</h3>
+                            <p class="text-xs text-slate-500 mb-4">Desain Sporty & Performa Maksimal</p>
+                            
+                            <div class="grid grid-cols-3 gap-2 py-3 border-y border-slate-100 text-slate-600 text-xs font-medium mb-4">
+                                <div class="flex items-center gap-1.5"><i class="fa-solid fa-user-group text-amber-500"></i> 7 Kursi</div>
+                                <div class="flex items-center gap-1.5"><i class="fa-solid fa-gear text-amber-500"></i> Otomatis</div>
+                                <div class="flex items-center gap-1.5"><i class="fa-solid fa-gas-pump text-amber-500"></i> Diesel</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0 flex items-center justify-between border-t border-slate-50 mt-auto">
+                        <div>
+                            <span class="text-xs text-slate-400 block">Mulai dari</span>
+                            <span class="text-xl font-black text-amber-600">Rp 950.000</span><span class="text-xs text-slate-500">/hari</span>
+                        </div>
+                        <button onclick="bookCar('Fortuner GR Sport', '950.000')" class="bg-brand-navy hover:bg-slate-800 text-white font-medium px-4 py-2.5 rounded-xl text-xs flex items-center gap-2 transition-all">
+                            <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i> Pesan WA
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. SECTION PAKET SEWA -->
+    <section id="paket" class="py-20 bg-slate-900 text-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-amber-500 font-bold text-sm tracking-wider uppercase">Pilihan Paket Best Seller</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">Paket Rental Spesial Sesuai Kebutuhan</h2>
+                <p class="text-slate-400 mt-3 text-base">Hemat lebih banyak dengan memilih opsi paket layanan terlengkap dari kami.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Paket Harian -->
+                <div class="bg-slate-800 border border-slate-700 rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group hover:border-amber-500/50 transition-all">
+                    <div>
+                        <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Harian / City Tour</span>
+                        <h3 class="text-2xl font-bold text-white mt-2 mb-4">Paket 12-24 Jam</h3>
+                        <p class="text-slate-400 text-sm mb-6">Cocok untuk keperluan dinas singkat, wisata harian, atau keperluan bisnis di dalam kota.</p>
+                        <ul class="space-y-3 text-slate-300 text-sm mb-8">
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-amber-500"></i> Pilihan Lepas Kunci / Driver</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-amber-500"></i> Gratis Antar Jemput Bandara/Hotel</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-amber-500"></i> Kondisi Mobil Bersih & Wangi</li>
+                        </ul>
+                    </div>
+                    <button onclick="openBookingModal('Paket Harian')" class="w-full bg-slate-700 hover:bg-amber-500 hover:text-brand-navy text-white font-bold py-3.5 rounded-xl transition-all">Pesan Paket Harian</button>
+                </div>
+
+                <!-- Paket Mingguan (POPULAR) -->
+                <div class="bg-gradient-to-b from-slate-800 to-slate-850 border-2 border-amber-500 rounded-3xl p-8 flex flex-col justify-between relative shadow-2xl shadow-amber-500/10">
+                    <div class="absolute -top-3.5 left-1/2 transform -translate-x-1/2 bg-amber-500 text-brand-navy text-xs font-extrabold px-4 py-1 rounded-full uppercase tracking-wider">Paling Populer</div>
+                    <div>
+                        <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Mingguan / Luar Kota</span>
+                        <h3 class="text-2xl font-bold text-white mt-2 mb-4">Paket 7 Hari</h3>
+                        <p class="text-slate-400 text-sm mb-6">Sangat pas untuk liburan panjang bersama keluarga atau perjalanan dinas luar kota.</p>
+                        <ul class="space-y-3 text-slate-300 text-sm mb-8">
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-amber-500"></i> Diskon Khusus Hingga 15%</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-amber-500"></i> Bebas Biaya Overtime 2 Jam</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-amber-500"></i> Asuransi Perjalanan Standar</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-amber-500"></i> Replacement Car 24/7 jika emergency</li>
+                        </ul>
+                    </div>
+                    <button onclick="openBookingModal('Paket Mingguan')" class="w-full bg-amber-500 hover:bg-amber-600 text-brand-navy font-bold py-3.5 rounded-xl shadow-lg shadow-amber-500/20 transition-all">Pesan Paket Mingguan</button>
+                </div>
+
+                <!-- Paket VIP / Wedding -->
+                <div class="bg-slate-800 border border-slate-700 rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden group hover:border-amber-500/50 transition-all">
+                    <div>
+                        <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Pernikahan / VIP Drop</span>
+                        <h3 class="text-2xl font-bold text-white mt-2 mb-4">Wedding & VIP Car</h3>
+                        <p class="text-slate-400 text-sm mb-6">Layanan mobil mewah lengkap dengan dekorasi bunga & driver berpakaian rapi formal.</p>
+                        <ul class="space-y-3 text-slate-300 text-sm mb-8">
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-amber-500"></i> Unit Alphard / Camry / Fortuner</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-amber-500"></i> Termasuk Dekorasi Pita & Bunga</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-amber-500"></i> Driver Khusus Berbaju Jas Rapi</li>
+                        </ul>
+                    </div>
+                    <button onclick="openBookingModal('Paket VIP / Wedding')" class="w-full bg-slate-700 hover:bg-amber-500 hover:text-brand-navy text-white font-bold py-3.5 rounded-xl transition-all">Pesan Paket VIP</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. SECTION TESTIMONI PELANGGAN -->
+    <section id="testimoni" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-amber-600 font-bold text-sm tracking-wider uppercase">Ulasan Pelanggan</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-navy mt-2">Apa Kata Mereka Tentang DriveEase?</h2>
+                <p class="text-slate-600 mt-3 text-base">Kepuasan ribuan pelanggan adalah bukti kualitas dan integritas layanan kami.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testi 1 -->
+                <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm relative">
+                    <div class="flex text-amber-400 text-sm mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-slate-600 text-sm italic mb-6">"Pelayanan luar biasa! Mobil Brio yang saya sewa sangat bersih, wangi, dan mesinnya responsif. Proses sewa lepas kunci juga sangat cepat dan tidak berbelit-belit. Recommended!"</p>
+                    <div class="flex items-center gap-4 border-t border-slate-100 pt-4">
+                        <div class="w-11 h-11 bg-amber-500 text-brand-navy rounded-full flex items-center justify-center font-bold">BP</div>
+                        <div>
+                            <h4 class="font-bold text-brand-navy text-sm">Budi Pratama</h4>
+                            <span class="text-xs text-slate-400">Wisata keluarga - Jakarta</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testi 2 -->
+                <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm relative">
+                    <div class="flex text-amber-400 text-sm mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-slate-600 text-sm italic mb-6">"Sangat terbantu untuk urusan bisnis di luar kota. Pak Supir ramah banget dan menguasai jalan tikus pas macet. Unit Innova Zenix-nya nyaman sekali."</p>
+                    <div class="flex items-center gap-4 border-t border-slate-100 pt-4">
+                        <div class="w-11 h-11 bg-brand-navy text-white rounded-full flex items-center justify-center font-bold">SL</div>
+                        <div>
+                            <h4 class="font-bold text-brand-navy text-sm">Siti Lestari</h4>
+                            <span class="text-xs text-slate-400">Kunjungan Bisnis - Surabaya</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testi 3 -->
+                <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm relative">
+                    <div class="flex text-amber-400 text-sm mb-4">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-slate-600 text-sm italic mb-6">"Pesan Alphard buat kebutuhan mobil pengantin sepupu. Mobilnya mulus bgt, dekorasi pitanya cantik, dan driver-nya super profesional memakai jas. Mantap!"</p>
+                    <div class="flex items-center gap-4 border-t border-slate-100 pt-4">
+                        <div class="w-11 h-11 bg-amber-500 text-brand-navy rounded-full flex items-center justify-center font-bold">DR</div>
+                        <div>
+                            <h4 class="font-bold text-brand-navy text-sm">Dimas Rayhan</h4>
+                            <span class="text-xs text-slate-400">Acara Pernikahan - Bandung</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. SECTION CARA PEMESANAN -->
+    <section id="cara-pesan" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-amber-600 font-bold text-sm tracking-wider uppercase">Langkah Mudah</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-navy mt-2">4 Langkah Praktis Menyewa Mobil</h2>
+                <p class="text-slate-600 mt-3 text-base">Proses cepat tanpa ribet, mobil langsung siap Anda gunakan.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+                <!-- Step 1 -->
+                <div class="text-center p-6 relative">
+                    <div class="w-16 h-16 bg-amber-500 text-brand-navy font-black text-2xl rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-amber-500/20">1</div>
+                    <h3 class="text-lg font-bold text-brand-navy mb-2">Pilih Mobil</h3>
+                    <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">Tentukan jenis mobil dan paket durasi sewa yang sesuai kebutuhan perjalanan Anda.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="text-center p-6 relative">
+                    <div class="w-16 h-16 bg-brand-navy text-amber-500 font-black text-2xl rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-brand-navy/20">2</div>
+                    <h3 class="text-lg font-bold text-brand-navy mb-2">Hubungi / Isi Form</h3>
+                    <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">Klik pesan via WhatsApp atau isi formulir pemesanan online di website ini.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="text-center p-6 relative">
+                    <div class="w-16 h-16 bg-brand-navy text-amber-500 font-black text-2xl rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-brand-navy/20">3</div>
+                    <h3 class="text-lg font-bold text-brand-navy mb-2">Verifikasi Data</h3>
+                    <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">Tim admin kami akan memverifikasi dokumen persyaratannya dengan cepat.</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="text-center p-6 relative">
+                    <div class="w-16 h-16 bg-emerald-500 text-white font-black text-2xl rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-emerald-500/20">4</div>
+                    <h3 class="text-lg font-bold text-brand-navy mb-2">Mobil Siap Digunakan!</h3>
+                    <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">Mobil kami antar ke lokasi Anda atau bisa diambil langsung di kantor cabang kami.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. FOOTER & CONTACT -->
+    <footer id="kontak" class="bg-brand-navy text-slate-300 pt-16 pb-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                
+                <!-- Col 1: Brand Info -->
+                <div class="space-y-4">
+                    <a href="#" class="flex items-center gap-3">
+                        <div class="w-9 h-9 bg-amber-500 rounded-xl flex items-center justify-center text-brand-navy text-lg font-black">
+                            <i class="fa-solid fa-car-side"></i>
+                        </div>
+                        <span class="text-2xl font-extrabold text-white tracking-tight">Drive<span class="text-amber-500">Ease</span></span>
+                    </a>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        Penyedia jasa rental & sewa mobil profesional dengan armada terlengkap, terawat, dan harga bersahabat untuk perjalanan pribadi maupun bisnis.
+                    </p>
+                    <div class="flex space-x-3 pt-2">
+                        <a href="#" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-amber-500 hover:text-brand-navy flex items-center justify-center transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-amber-500 hover:text-brand-navy flex items-center justify-center transition-all"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-lg bg-slate-800 hover:bg-amber-500 hover:text-brand-navy flex items-center justify-center transition-all"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Navigation -->
+                <div>
+                    <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Navigasi Cepat</h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="#beranda" class="hover:text-amber-500 transition-colors">Beranda</a></li>
+                        <li><a href="#armada" class="hover:text-amber-500 transition-colors">Daftar Armada Mobil</a></li>
+                        <li><a href="#keunggulan" class="hover:text-amber-500 transition-colors">Keunggulan Kami</a></li>
+                        <li><a href="#paket" class="hover:text-amber-500 transition-colors">Paket & Promo</a></li>
+                        <li><a href="#testimoni" class="hover:text-amber-500 transition-colors">Testimoni Pelanggan</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Contact & Hours -->
+                <div>
+                    <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Kontak & Jam Kerja</h4>
+                    <ul class="space-y-3 text-xs">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot text-amber-500 mt-0.5"></i>
+                            <span>Jl. Raya Utama No. 88, Jakarta Selatan, DKI Jakarta 12340</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-amber-500"></i>
+                            <span>(021) 555-0192 / 0812-3456-7890</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-clock text-amber-500"></i>
+                            <span>Senin - Minggu: 24 Jam Nonstop</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Service Areas -->
+                <div>
+                    <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Area Layanan Utama</h4>
+                    <p class="text-xs text-slate-400 mb-3">Melayani antardijemput area Jabodetabek, Bandung, Surabaya, Semarang, Bali, & kota-kota besar lainnya.</p>
+                    <div class="inline-block bg-slate-800 px-3 py-2 rounded-lg text-xs font-semibold text-emerald-400 border border-slate-700">
+                        <i class="fa-solid fa-circle text-[8px] mr-1.5 animate-pulse"></i> CS Standby 24 Jam
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="border-t border-slate-800 pt-8 text-center text-xs text-slate-500">
+                <p>&copy; 2026 DriveEase Car Rental. Hak Cipta Dilindungi Undang-Undang.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FLOATING WHATSAPP BUTTON -->
+    <a href="https://wa.me/6281234567890?text=Halo%20DriveEase,%20saya%20ingin%20tanya%20sewa%20mobil" 
+       target="_blank" 
+       class="fixed bottom-6 right-6 z-50 bg-emerald-500 hover:bg-emerald-600 text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl shadow-2xl shadow-emerald-500/50 hover:scale-110 transition-all duration-300 group"
+       title="Chat WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span class="absolute right-16 bg-slate-900 text-white text-xs font-medium px-3 py-1.5 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-md">
+            Hubungi Kami via WA
+        </span>
+    </a>
+
+    <!-- BOOKING MODAL FORM -->
+    <div id="booking-modal" class="fixed inset-0 z-50 hidden bg-brand-navy/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-100 relative animate-fade-in max-h-[90vh] overflow-y-auto">
+            
+            <!-- Close Button -->
+            <button onclick="closeBookingModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 p-2 text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="mb-6">
+                <h3 class="text-2xl font-bold text-brand-navy">Formulir Sewa Mobil</h3>
+                <p class="text-slate-500 text-xs mt-1">Isi data singkat berikut, tim kami akan langsung merespons pesanan Anda.</p>
+            </div>
+
+            <form id="modal-form" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Nama Lengkap</label>
+                    <input type="text" id="modal-name" required placeholder="Contoh: Budi Santoso" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Nomor WhatsApp</label>
+                    <input type="tel" id="modal-phone" required placeholder="Contoh: 08123456789" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Pilih Mobil</label>
+                        <select id="modal-car" class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            <option value="Honda Brio RS">Honda Brio RS</option>
+                            <option value="Toyota Innova Zenix">Toyota Innova Zenix</option>
+                            <option value="Pajero Sport Dakar">Pajero Sport Dakar</option>
+                            <option value="Toyota Alphard Transformer">Toyota Alphard Transformer</option>
+                            <option value="All New Veloz">All New Veloz</option>
+                            <option value="Fortuner GR Sport">Fortuner GR Sport</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Layanan Driver</label>
+                        <select id="modal-service" class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            <option value="Dengan Sopir">Dengan Sopir</option>
+                            <option value="Lepas Kunci">Lepas Kunci</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Tgl Mulai Sewa</label>
+                        <input type="date" id="modal-date" required class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Durasi (Hari)</label>
+                        <input type="number" id="modal-duration" min="1" value="1" required class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Catatan Tambahan (Opsional)</label>
+                    <textarea id="modal-notes" rows="2" placeholder="Contoh: Lokasi penjemputan Bandara Soekarno Hatta..." class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+                </div>
+
+                <button type="button" onclick="submitBookingToWA()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2 text-sm mt-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Kirim Pemesanan via WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Mobile Navigation Toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Fleet Filter Logic
+        function filterFleet(category) {
+            const cards = document.querySelectorAll('.fleet-card');
+            const buttons = document.querySelectorAll('.fleet-filter-btn');
+
+            // Update active button styling
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-brand-navy', 'text-white');
+                btn.classList.add('bg-slate-100', 'text-slate-700');
+            });
+            event.target.classList.remove('bg-slate-100', 'text-slate-700');
+            event.target.classList.add('bg-brand-navy', 'text-white');
+
+            // Show / Hide cards
+            cards.forEach(card => {
+                if (category === 'all' || card.classList.contains(category)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Modal Functionality
+        const modal = document.getElementById('booking-modal');
+
+        function openBookingModal(presetCar = '') {
+            modal.classList.remove('hidden');
+            if (presetCar) {
+                const selectCar = document.getElementById('modal-car');
+                for (let option of selectCar.options) {
+                    if (option.value.includes(presetCar) || presetCar.includes(option.value)) {
+                        option.selected = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        function closeBookingModal() {
+            modal.classList.add('hidden');
+        }
+
+        // Direct Booking via Card Button
+        function bookCar(carName, price) {
+            openBookingModal(carName);
+        }
+
+        // Quick Search Bar Handler
+        function handleQuickSearch() {
+            const car = document.getElementById('search-car').value;
+            const driver = document.getElementById('search-driver').value;
+            const date = document.getElementById('search-date').value;
+
+            document.getElementById('modal-car').value = car !== 'Semua Mobil' ? car : 'Honda Brio RS';
+            document.getElementById('modal-service').value = driver;
+            if (date) document.getElementById('modal-date').value = date;
+
+            openBookingModal();
+        }
+
+        // Submit Booking Form & Redirect to WhatsApp
+        function submitBookingToWA() {
+            const name = document.getElementById('modal-name').value;
+            const phone = document.getElementById('modal-phone').value;
+            const car = document.getElementById('modal-car').value;
+            const service = document.getElementById('modal-service').value;
+            const date = document.getElementById('modal-date').value;
+            const duration = document.getElementById('modal-duration').value;
+            const notes = document.getElementById('modal-notes').value;
+
+            if (!name || !phone || !date) {
+                alert('Mohon lengkapi Nama, Nomor WhatsApp, dan Tanggal Mulai Sewa.');
+                return;
+            }
+
+            const targetWA = "6281234567890"; // Ganti dengan nomor WhatsApp rental Anda
+            const message = `Halo DriveEase,%0A%0ASaya ingin melakukan reservasi sewa mobil:%0A- *Nama:* ${encodeURIComponent(name)}%0A- *No. HP:* ${encodeURIComponent(phone)}%0A- *Mobil:* ${encodeURIComponent(car)}%0A- *Layanan:* ${encodeURIComponent(service)}%0A- *Tanggal Mulai:* ${encodeURIComponent(date)}%0A- *Durasi:* ${encodeURIComponent(duration)} Hari%0A- *Catatan:* ${encodeURIComponent(notes || '-')}%0A%0AMohon info ketersediaan dan total biayanya. Terima kasih!`;
+
+            window.open(`https://wa.me/${targetWA}?text=${message}`, '_blank');
+            closeBookingModal();
+        }
+    </script>
+</body>
+</html>
